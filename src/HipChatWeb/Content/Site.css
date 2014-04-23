@@ -1,0 +1,16 @@
+﻿html {
+
+}
+body {
+  margin: 0;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+  margin-top: 45px;
+}
+
+/* Set padding to display errors that occur during databinding */
+.padding-error {
+    padding-top: 20px;
+}

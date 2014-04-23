@@ -1,0 +1,13 @@
+﻿@model IEnumerable<HipChatWeb.Models.RoomContext>
+
+<div class="row">
+  <ul class="list-group">
+    @foreach (var room in Model)
+    {
+      <li class="list-group-item">
+        <span class="badge">@room.MemberCount</span>
+        <h3><a href="@Url.Action("Chat", new {id = room.Id})">@room.Name</a></h3>
+      </li>
+    }
+  </ul>
+</div>

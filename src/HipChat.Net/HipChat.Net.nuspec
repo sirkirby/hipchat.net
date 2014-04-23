@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>HipChat.Net.Portable</id>
+    <version>$version$</version>
+    <title>HipChat.Net (portable)</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/sirkirby/hipchat.net/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/sirkirby/hipchat.net</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/sirkirby/hipchat.net/master/pkglogo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>HipChat API v2 portable client library for .NET. Issue? https://github.com/sirkirby/hipchat.net/issues</description>
+    <releaseNotes>initial release</releaseNotes>
+    <copyright>Copyright Chris Kirby 2014</copyright>
+    <tags>hipchat chat api</tags>
+  </metadata>
+</package>

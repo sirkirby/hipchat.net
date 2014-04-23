@@ -1,0 +1,100 @@
+﻿@model IEnumerable<HipChatWeb.Models.MessageContext>
+@{
+  ViewBag.Title = "Chat";
+}
+
+@section Head {
+  @Styles.Render("~/Content/chat")
+}
+
+@section Scripts
+{
+  @Scripts.Render("~/bundles/knockout", "~/bundles/jquery", "~/bundles/signalr", "~/bundles/dateformat")
+  <script src="~/signalr/hubs"></script>
+  <script>
+  $(function() {
+    var viewModel = {
+      messages: ko.observableArray()
+    };
+    ko.applyBindings(viewModel);
+    var mCount = viewModel.messages.length;
+
+    var chat = $.connection.chatHub;
+
+    chat.client.roomMessage = function(room, from, message, color) {
+      viewModel.messages.push({ id: mCount, room: @ViewBag.roomId, from: htmlEncode(from), message: message, timestamp: $.format.date(new Date(), "MM/dd HH:mm") });
+        $("#chatWindow").stop().animate({ scrollTop: $("#chatWindow").prop("scrollHeight") }, 10);
+      }
+
+      $.connection.hub.start().done(function() {
+        $("#message").pressEnter(function() {
+          $.ajax({
+            type: "POST",
+            url: '@Url.Action("SendNotification")',
+            data: {
+              "id": '@( ViewBag.roomId)',
+              "message": htmlEncode($("#message").val())
+            },
+            complete: function(xhr, status) {
+              $("#message").val("").focus();
+              console.log("message sent");
+            }
+          });
+        });
+        chat.server.joinRoom(@ViewBag.roomId);
+  });
+  $("#chatWindow").stop().animate({ scrollTop: $("#chatWindow").prop("scrollHeight") }, 10);
+  });
+  // This optional function html-encodes messages for display in the page.
+  function htmlEncode(value) {
+    var encodedValue = $('<div />').text(value).html();
+    return encodedValue;
+  }
+  $.fn.pressEnter = function(fn) {
+    return this.each(function() {
+      $(this).bind('enterPress', fn);
+      $(this).keyup(function(e) {
+        if (e.keyCode == 13) {
+          $(this).trigger("enterPress");
+        }
+      });
+    });
+  };
+  </script>
+}
+
+<div class="chatWindow" id="chatWindow">
+  <div>
+    @foreach (var message in Model)
+    {
+      <table class="table">
+        <tbody>
+          <tr>
+            <td class="nameCell">@message.From</td>
+          <td class="messageCell">
+            <p class="messageTimeStamp">@(DateTime.Now.ToString("MM/dd HH:mm"))</p>
+            <div>@Html.Raw(message.Message)</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    }
+  </div>
+  <div data-bind="foreach: messages">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td class="nameCell" data-bind="text: from"></td>
+          <td class="messageCell">
+            <p class="messageTimeStamp" data-bind="text: timestamp"></p>
+            <div data-bind="html: message"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="messageWindow">
+  <input class="form-control" type="text" id="message" placeholder="Your message" />
+</div>
+
