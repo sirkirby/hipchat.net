@@ -22,6 +22,8 @@ var rooms = await hipChat.Rooms.GetAllAsync();
 var members = await hipChat.Rooms.GetMembersAsync("roomNameOrId")
 // get recent room message history
 await hipChat.Rooms.GetHistoryAsync("roomNameOrId")
+// send room notification
+await hipChat.Rooms.SendNotificationAsync("roomNameOrId", "My <strong>important</strong> message!");
 ```
 
 For more examples, see the [HipChatWeb](src/HipChatWeb) project in the repository.
