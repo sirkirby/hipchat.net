@@ -12,7 +12,7 @@ namespace HipChat.Net.Models.Response
     public string Date { get; set; }
 
     [JsonProperty("file")]
-    public string File { get; set; }
+    public File File { get; set; }
 
     [JsonProperty("from")]
     public dynamic From { get; set; }

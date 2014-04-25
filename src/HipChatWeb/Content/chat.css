@@ -54,3 +54,12 @@ div.chatWindow td {
 table {
   font-size: 15px;
 }
+
+.table {
+  margin-bottom: 0;
+}
+
+.attachment {
+  padding-top: 5px;
+  font-style: italic;
+}

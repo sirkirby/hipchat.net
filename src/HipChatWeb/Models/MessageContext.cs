@@ -6,5 +6,6 @@
     public string From { get; set; }
     public string Message { get; set; }
     public string Color { get; set; }
+    public string FileUrl{ get; set; }
   }
 }

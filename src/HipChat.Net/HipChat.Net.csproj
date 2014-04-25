@@ -58,6 +58,7 @@
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Models\Request\SendNotification.cs" />
     <Compile Include="Models\Request\WebhookEvent.cs" />
+    <Compile Include="Models\Response\File.cs" />
     <Compile Include="Models\Response\Room.cs" />
     <Compile Include="Models\Response\Entity.cs" />
     <Compile Include="Models\Response\IMessage.cs" />

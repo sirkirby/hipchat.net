@@ -59,7 +59,8 @@ namespace HipChatWeb.Controllers
         Id = h.Id,
         Message = h.MessageText,
         Color = h.Color,
-        From = h.From is string ? h.From : h.From.name
+        From = h.From is string ? h.From : h.From.name,
+        FileUrl = h.File != null ? h.File.Url : null
       }).ToList();
 
       ViewBag.roomId = id;

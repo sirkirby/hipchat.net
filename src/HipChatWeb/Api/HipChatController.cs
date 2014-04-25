@@ -30,7 +30,10 @@ namespace HipChatWeb.Api
       try
       {
         var hub = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
-        hub.Clients.Group(message.Item.Room.Id).roomMessage(message.Item.Room.Id, message.Item.Message.From.name ?? "Self", message.Item.Message.MessageText, message.Item.Message.Color);
+        hub.Clients.Group(message.Item.Room.Id).roomMessage(message.Item.Room.Id,
+          message.Item.Message.From.name ?? "Self",
+          message.Item.Message.MessageText,
+          message.Item.Message.File != null ? message.Item.Message.File.Url : null);
         
         return Request.CreateResponse(HttpStatusCode.Accepted, true);
       }
@@ -51,7 +54,10 @@ namespace HipChatWeb.Api
       try
       {
         var hub = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
-        hub.Clients.Group(message.Item.Room.Id).roomMessage(message.Item.Room.Id, message.Item.Message.From ?? "Self", message.Item.Message.MessageText, message.Item.Message.Color);
+        hub.Clients.Group(message.Item.Room.Id).roomMessage(message.Item.Room.Id, 
+          message.Item.Message.From ?? "Self",
+          message.Item.Message.MessageText,
+          null);
 
         return Request.CreateResponse(HttpStatusCode.Accepted, true);
       }

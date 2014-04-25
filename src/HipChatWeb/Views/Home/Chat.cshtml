@@ -21,8 +21,8 @@
 
     var chat = $.connection.chatHub;
 
-    chat.client.roomMessage = function(room, from, message, color) {
-      viewModel.messages.push({ id: mCount, room: @ViewBag.roomId, from: htmlEncode(from), message: message, timestamp: $.format.date(new Date(), "MM/dd HH:mm") });
+    chat.client.roomMessage = function(room, from, message, file) {
+      viewModel.messages.push({ id: mCount, room: @ViewBag.roomId, from: htmlEncode(from), message: message, timestamp: $.format.date(new Date(), "MM/dd HH:mm"), file: file });
         $("#chatWindow").stop().animate({ scrollTop: $("#chatWindow").prop("scrollHeight") }, 10);
       }
 
@@ -74,6 +74,10 @@
           <td class="messageCell">
             <p class="messageTimeStamp">@(DateTime.Now.ToString("MM/dd HH:mm"))</p>
             <div>@Html.Raw(message.Message)</div>
+            @if (message.FileUrl != null)
+            {
+              <div class="attachment">File: <a href="@message.FileUrl"  title="attached file" target="hclight">@message.FileUrl</a></div>
+            }
           </td>
         </tr>
       </tbody>
@@ -88,6 +92,7 @@
           <td class="messageCell">
             <p class="messageTimeStamp" data-bind="text: timestamp"></p>
             <div data-bind="html: message"></div>
+            <div data-bind="if: file">File: <a data-bind="attr: { href: file }" title="attached file" target="hclight"><span data-bind="text: file"></span></a></div>
           </td>
         </tr>
       </tbody>
