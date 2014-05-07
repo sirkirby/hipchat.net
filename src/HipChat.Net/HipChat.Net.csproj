@@ -51,6 +51,7 @@
     <Compile Include="Http\IRequest.cs" />
     <Compile Include="Http\Response.cs" />
     <Compile Include="IHipChatClient.cs" />
+    <Compile Include="Models\Request\CreateRoom.cs" />
     <Compile Include="Models\Request\CreateWebhook.cs" />
     <Compile Include="Models\Request\MessageColor.cs" />
     <Compile Include="Models\Request\MessageFormat.cs" />

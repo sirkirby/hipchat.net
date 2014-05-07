@@ -13,10 +13,19 @@ namespace HipChat.Net.Clients
 {
   public class RoomsClient : ApiClient, IRoomsClient
   {
-    public RoomsClient(IApiConnection apiConnection) : base(apiConnection) { }
+    private readonly JsonSerializerSettings _jsonSettings;
 
     /// <summary>
-    /// create as an asynchronous operation.
+    /// Initializes a new instance of the <see cref="ApiClient" /> class.
+    /// </summary>
+    /// <param name="apiConnection">The API connection.</param>
+    public RoomsClient(IApiConnection apiConnection) : base(apiConnection)
+    {
+      _jsonSettings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
+    }
+
+    /// <summary>
+    /// Create the room
     /// </summary>
     /// <param name="name">The name.</param>
     /// <param name="owner">The owner.</param>
@@ -24,13 +33,36 @@ namespace HipChat.Net.Clients
     /// <param name="guestAccess">if set to <c>true</c> [guest access].</param>
     /// <returns>Task&lt;IResponse&lt;Entity&gt;&gt;.</returns>
     /// <exception cref="System.NotImplementedException"></exception>
-    public async Task<IResponse<Entity>> CreateAsync(string name, string owner, RoomPrivacy privacy = RoomPrivacy.Public, bool guestAccess = false)
+    public async Task<IResponse<bool>> CreateAsync(string name, string owner, RoomPrivacy privacy = RoomPrivacy.Public, bool guestAccess = false)
     {
-      throw new NotImplementedException();
+      Validate.Length(name, 100, "Room Name");
+      Validate.Mention(owner, "Owner");
+      
+      var room = new CreateRoom
+      {
+        Name = name,
+        OwnerUserId = owner,
+        GuestAccess = guestAccess,
+        Privacy = privacy
+      };
+
+      var json = JsonConvert.SerializeObject(room, Formatting.None, _jsonSettings);
+
+      var payload = new StringContent(json, Encoding.UTF8, "application/json");
+
+      var result = await ApiConnection.Client.PostAsync("room", payload);
+      var rawResponse = await result.Content.ReadAsStringAsync();
+      var response = new Response<bool>(true)
+      {
+        Code = result.StatusCode,
+        Body = rawResponse,
+        ContentType = result.Content.Headers.ContentType.MediaType
+      };
+      return response;
     }
 
     /// <summary>
-    /// update as an asynchronous operation.
+    /// Update the room
     /// </summary>
     /// <param name="name">The name.</param>
     /// <param name="privacy">The privacy.</param>
@@ -45,7 +77,28 @@ namespace HipChat.Net.Clients
     }
 
     /// <summary>
-    /// get all as an asynchronous operation.
+    /// Deletes the room
+    /// </summary>
+    /// <param name="room">The room.</param>
+    /// <returns>Task&lt;IResponse&lt;System.Boolean&gt;&gt;.</returns>
+    /// <exception cref="System.NotImplementedException"></exception>
+    public async Task<IResponse<bool>> DeleteAsync(string room)
+    {
+      Validate.Length(room, 100, "Room Name");
+      
+      var result = await ApiConnection.Client.DeleteAsync(string.Format("room/{0}", room));
+      var rawResponse = await result.Content.ReadAsStringAsync();
+      var response = new Response<bool>(true)
+      {
+        Code = result.StatusCode,
+        Body = rawResponse,
+        ContentType = result.Content.Headers.ContentType.MediaType
+      };
+      return response;
+    }
+
+    /// <summary>
+    /// Gell all rooms
     /// </summary>
     /// <returns>Task&lt;RoomItems&lt;Entity&gt;&gt;.</returns>
     public async Task<IResponse<RoomItems<Entity>>> GetAllAsync()
@@ -61,7 +114,7 @@ namespace HipChat.Net.Clients
     }
 
     /// <summary>
-    /// get as an asynchronous operation.
+    /// Get the room
     /// </summary>
     /// <param name="room">The room.</param>
     /// <returns>Task&lt;Room&gt;.</returns>
@@ -80,7 +133,7 @@ namespace HipChat.Net.Clients
     }
 
     /// <summary>
-    /// get members as an asynchronous operation.
+    /// Get all room members
     /// </summary>
     /// <param name="room">The room.</param>
     /// <returns>Task&lt;IResponse&lt;RoomItems&lt;Mention&gt;&gt;&gt;.</returns>
@@ -99,7 +152,7 @@ namespace HipChat.Net.Clients
     }
 
     /// <summary>
-    /// send notification as an asynchronous operation.
+    /// Send room notification.
     /// </summary>
     /// <param name="room">The room.</param>
     /// <param name="notification">The notification.</param>
@@ -109,7 +162,7 @@ namespace HipChat.Net.Clients
       Validate.NotNull(notification, "SendNotification argument");
       Validate.Length(notification.Message, 10000, "Notification Message");
 
-      var json = JsonConvert.SerializeObject(notification, Formatting.None, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+      var json = JsonConvert.SerializeObject(notification, Formatting.None, _jsonSettings);
 
       var payload = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -125,7 +178,7 @@ namespace HipChat.Net.Clients
     }
 
     /// <summary>
-    /// send notification as an asynchronous operation.
+    /// Send room notification
     /// </summary>
     /// <param name="room">The room.</param>
     /// <param name="message">The message.</param>
@@ -147,7 +200,7 @@ namespace HipChat.Net.Clients
     }
 
     /// <summary>
-    /// create webhook as an asynchronous operation.
+    /// Create room webhook
     /// </summary>
     /// <param name="room">The room.</param>
     /// <param name="hook">The hook.</param>
@@ -157,7 +210,7 @@ namespace HipChat.Net.Clients
       Validate.Length(room, 100, "Room Id/Name");
       Validate.NotEmpty(hook.Url, "Webhook URL");
 
-      var json = JsonConvert.SerializeObject(hook, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+      var json = JsonConvert.SerializeObject(hook, Formatting.None, _jsonSettings);
       var payload = new StringContent(json, Encoding.UTF8, "application/json");
 
       var result = await ApiConnection.Client.PostAsync(string.Format("room/{0}/webhook", room), payload);
@@ -172,7 +225,7 @@ namespace HipChat.Net.Clients
     }
 
     /// <summary>
-    /// Creates the webhook.
+    /// Create room webhook
     /// </summary>
     /// <param name="room">The room.</param>
     /// <param name="url">The URL.</param>
@@ -195,7 +248,7 @@ namespace HipChat.Net.Clients
     }
 
     /// <summary>
-    /// Gets the webhooks.
+    /// Get all room webhooks
     /// </summary>
     /// <param name="room">The room.</param>
     /// <returns>Task&lt;IResponse&lt;Room&gt;&gt;.</returns>
@@ -214,7 +267,29 @@ namespace HipChat.Net.Clients
     }
 
     /// <summary>
-    /// get history as an asynchronous operation.
+    /// Delete room webhook
+    /// </summary>
+    /// <param name="room">The room.</param>
+    /// <param name="id">The identifier.</param>
+    /// <returns>Task&lt;IResponse&lt;System.Boolean&gt;&gt;.</returns>
+    public async Task<IResponse<bool>> DeleteWebhook(string room, string id)
+    {
+      Validate.Length(room, 100, "Room Id/Name");
+      Validate.NotEmpty(id, "Webhook URL");
+      
+      var result = await ApiConnection.Client.DeleteAsync(string.Format("room/{0}/webhook/{1}", room, id));
+      var rawResponse = await result.Content.ReadAsStringAsync();
+      var response = new Response<bool>(true)
+      {
+        Code = result.StatusCode,
+        Body = rawResponse,
+        ContentType = result.Content.Headers.ContentType.MediaType
+      };
+      return response;
+    }
+
+    /// <summary>
+    /// Get recent room history.
     /// </summary>
     /// <param name="room">The room.</param>
     /// <returns>Task&lt;IResponse&lt;RoomItems&lt;Message&gt;&gt;&gt;.</returns>

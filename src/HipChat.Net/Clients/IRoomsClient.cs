@@ -16,7 +16,7 @@ namespace HipChat.Net.Clients
     /// <param name="privacy">The privacy.</param>
     /// <param name="guestAccess">if set to <c>true</c> [guest access].</param>
     /// <returns>Task&lt;IResponse&lt;Entity&gt;&gt;.</returns>
-    Task<IResponse<Entity>> CreateAsync(string name, string owner, RoomPrivacy privacy = RoomPrivacy.Public, bool guestAccess = false);
+    Task<IResponse<bool>> CreateAsync(string name, string owner, RoomPrivacy privacy = RoomPrivacy.Public, bool guestAccess = false);
 
     /// <summary>
     /// Updates the asynchronous.
@@ -28,6 +28,13 @@ namespace HipChat.Net.Clients
     /// <param name="owner">The owner.</param>
     /// <returns>Task&lt;IResponse&lt;System.Boolean&gt;&gt;.</returns>
     Task<IResponse<bool>> UpdateAsync(string name, RoomPrivacy privacy = RoomPrivacy.Public, bool isArchived = false,  bool guestAccess = false, string owner = null);
+
+    /// <summary>
+    /// Deletes the asynchronous.
+    /// </summary>
+    /// <param name="room">The room.</param>
+    /// <returns>Task&lt;IResponse&lt;System.Boolean&gt;&gt;.</returns>
+    Task<IResponse<bool>> DeleteAsync(string room);
 
     /// <summary>
     /// Gets all asynchronous.
@@ -93,6 +100,14 @@ namespace HipChat.Net.Clients
     /// <param name="room">The room.</param>
     /// <returns>Task&lt;IResponse&lt;Room&gt;&gt;.</returns>
     Task<IResponse<RoomItems<Webhook>>> GetWebhooks(string room);
+
+    /// <summary>
+    /// Deletes the webhook.
+    /// </summary>
+    /// <param name="room">The room.</param>
+    /// <param name="id">The identifier.</param>
+    /// <returns>Task&lt;IResponse&lt;System.Boolean&gt;&gt;.</returns>
+    Task<IResponse<bool>> DeleteWebhook(string room, string id);
 
     /// <summary>
     /// Gets the history asynchronous.

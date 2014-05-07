@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace HipChat.Net.Helpers
 {
@@ -46,7 +47,23 @@ namespace HipChat.Net.Helpers
       if (value.Length <= length)
         return;
 
-      throw new ArgumentException(string.Format("{0} must have a lengnth less than or equal to {1}", name, length));
+      throw new ArgumentException(string.Format("{0} must have a length less than or equal to {1}", name, length));
+    }
+
+    /// <summary>
+    /// Mentions the specified value.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="name">The name.</param>
+    /// <exception cref="System.ArgumentException"></exception>
+    public static void Mention(string value, string name)
+    {
+      NotEmpty(value, name);
+
+      if (value.StartsWith("@") && !Regex.IsMatch(value, @"\s+"))
+        return;
+
+      throw new ArgumentException(string.Format("{0} must begin with @ and contain no spaces", name));
     }
   }
 }
