@@ -17,5 +17,11 @@ namespace HipChat.Net.Models.Request
 
     [JsonProperty("name")]
     public string Name { get; set; }
+
+    public CreateWebhook()
+    {
+      Event = WebhookEvent.RoomMessage;
+      Name = "HipChatDotNet_Default";
+    }
   }
 }

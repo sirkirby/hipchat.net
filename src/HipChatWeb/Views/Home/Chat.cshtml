@@ -26,23 +26,23 @@
         $("#chatWindow").stop().animate({ scrollTop: $("#chatWindow").prop("scrollHeight") }, 10);
       }
 
-      $.connection.hub.start().done(function() {
-        $("#message").pressEnter(function() {
-          $.ajax({
-            type: "POST",
-            url: '@Url.Action("SendNotification")',
-            data: {
-              "id": '@( ViewBag.roomId)',
-              "message": htmlEncode($("#message").val())
-            },
-            complete: function(xhr, status) {
-              $("#message").val("").focus();
-              console.log("message sent");
-            }
-          });
+    $.connection.hub.start().done(function() {
+      $("#message").pressEnter(function() {
+        $.ajax({
+          type: "POST",
+          url: '@Url.Action("SendNotification")',
+          data: {
+            "id": '@( ViewBag.roomId)',
+            "message": htmlEncode($("#message").val())
+          },
+          complete: function(xhr, status) {
+            $("#message").val("").focus();
+            console.log("message sent");
+          }
         });
-        chat.server.joinRoom(@ViewBag.roomId);
-  });
+      });
+      chat.server.joinRoom(@ViewBag.roomId);
+    });
   $("#chatWindow").stop().animate({ scrollTop: $("#chatWindow").prop("scrollHeight") }, 10);
   });
   // This optional function html-encodes messages for display in the page.

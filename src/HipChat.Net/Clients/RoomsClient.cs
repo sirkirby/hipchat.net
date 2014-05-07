@@ -154,6 +154,9 @@ namespace HipChat.Net.Clients
     /// <returns>Task&lt;IResponse&lt;System.Boolean&gt;&gt;.</returns>
     public async Task<IResponse<bool>> CreateWebhookAsync(string room, CreateWebhook hook)
     {
+      Validate.Length(room, 100, "Room Id/Name");
+      Validate.NotEmpty(hook.Url, "Webhook URL");
+
       var json = JsonConvert.SerializeObject(hook, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
       var payload = new StringContent(json, Encoding.UTF8, "application/json");
 
