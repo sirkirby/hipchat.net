@@ -26,7 +26,7 @@ await hipChat.Rooms.GetHistoryAsync("roomNameOrId")
 await hipChat.Rooms.SendNotificationAsync("roomNameOrId", "My <strong>important</strong> message!");
 ```
 
-For more examples, see the [HipChatWeb](src/HipChatWeb) project in the repository.
+For more examples, see the [HipChatWeb](src/HipChatWeb) project in the repository or visit the hosted version here http://hipchatweb.azurewebsites.net/
 
 ## Build ##
 Using msbuild (v12+) against [HipChat.Net.csproj](src/HipChat.Net/HipChat.Net.csproj).
