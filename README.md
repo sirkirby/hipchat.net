@@ -1,5 +1,7 @@
 # HipChat.NET #
 
+[![Join the chat at https://gitter.im/sirkirby/hipchat.net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sirkirby/hipchat.net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 HipChat API v2 client library for .NET
 
 ## Supported Platforms
