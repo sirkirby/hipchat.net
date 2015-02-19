@@ -3,4 +3,4 @@ solution: src/HipChat.sln
 notifications:
   slack:
     secure: W9n7zwFuX6VSvA0gs4Uj3GM03XdUhjZrhlrc9v7xI29XIjPDVOkSFv7yWI6YGEUeUr5DOOKIqa5BF9Eah5/r1LVqeK8qm1hwRCG6uuV4XA1s+x1pg7x8YDIxcn0uQrFHvr2jH93z7LbMd6SXGP4hP6JTrKNSjFACXhE+D3c+KFo=
-    email: false
+  email: false
