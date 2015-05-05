@@ -11,7 +11,7 @@
     <iconUrl>https://raw.githubusercontent.com/sirkirby/hipchat.net/master/pkglogo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>HipChat API v2 portable client library for .NET. Issue? https://github.com/sirkirby/hipchat.net/issues</description>
-    <releaseNotes>initial release</releaseNotes>
+    <releaseNotes>Fixed issue throwing exception when getting new room.</releaseNotes>
     <copyright>Copyright Chris Kirby 2014</copyright>
     <tags>hipchat chat api</tags>
   </metadata>
