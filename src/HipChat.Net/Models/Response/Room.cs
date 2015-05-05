@@ -10,7 +10,7 @@ namespace HipChat.Net.Models.Response
     public string JabberId { get; set; }
 
     [JsonProperty("last_active")]
-    public DateTime LastActive { get; set; }
+    public Nullable<DateTime> LastActive { get; set; }
 
     [JsonProperty("created")]
     public DateTime Created { get; set; }
