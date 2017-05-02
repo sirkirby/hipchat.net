@@ -13,11 +13,11 @@ namespace HipChat.Net.Clients
         /// </summary>
         /// <param name="username">The username.</param>
         /// <param name="message">The message.</param>
-        /// <param name="notifyRoom">if set to <c>true</c> [notify room].</param>
+        /// <param name="notify">Optional. Default false.</param>
         /// <param name="format">The format.</param>
         /// <param name="color">The color.</param>
         /// <returns>Task&lt;IResponse&lt;System.Boolean&gt;&gt;.</returns>
-        Task<IResponse<bool>> SendNotificationAsync(string username, string message, bool notify = true, MessageFormat format = MessageFormat.Html, MessageColor color = MessageColor.Gray);
+        Task<IResponse<bool>> SendNotificationAsync(string username, string message, bool notify = false, MessageFormat format = MessageFormat.Html, MessageColor color = MessageColor.Gray);
 
         /// <summary>
         /// Sends the notification asynchronous.

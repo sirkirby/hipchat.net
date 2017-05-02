@@ -20,7 +20,7 @@ namespace HipChat.Net.Clients
             _jsonSettings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
         }
 
-        public async Task<IResponse<bool>> SendNotificationAsync(string username, string message, bool notify = true, MessageFormat format = MessageFormat.Html, MessageColor color = MessageColor.Gray)
+        public async Task<IResponse<bool>> SendNotificationAsync(string username, string message, bool notify = false, MessageFormat format = MessageFormat.Html, MessageColor color = MessageColor.Gray)
         {
             var notification = new SendMessage
             {
