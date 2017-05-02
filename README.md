@@ -32,6 +32,8 @@ var members = await hipChat.Rooms.GetMembersAsync("roomNameOrId")
 await hipChat.Rooms.GetHistoryAsync("roomNameOrId")
 // send room notification
 await hipChat.Rooms.SendNotificationAsync("roomNameOrId", "My <strong>important</strong> message!");
+// send user private message
+await hipChat.Users.SendNotificationAsync("userMentionNameOrIDOrEmail", "Your message goes here!");
 ```
 
 For more examples, see the [HipChatWeb](src/HipChatWeb) project in the repository or visit the hosted version here http://hipchatweb.azurewebsites.net/
