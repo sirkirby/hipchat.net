@@ -1,4 +1,8 @@
 ﻿using HipChat.Net.Http;
+using HipChat.Net.Models.Response;
+using Newtonsoft.Json;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace HipChat.Net.Clients
 {
