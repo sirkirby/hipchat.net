@@ -8,5 +8,10 @@ namespace HipChat.Net.Clients
 {
   public interface IEmoticonsClient
   {
+    /// <summary>
+    /// Gets all asynchronous.
+    /// </summary>
+    /// <returns>Task&lt;IResponse&lt;EmoticonItems&lt;Entity&gt;&gt;&gt;.</returns>
+    Task<IResponse<EmoticonItems<Emoticon>>> GetAllAsync();
   }
 }

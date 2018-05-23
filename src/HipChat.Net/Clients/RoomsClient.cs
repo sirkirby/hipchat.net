@@ -98,7 +98,7 @@ namespace HipChat.Net.Clients
     }
 
     /// <summary>
-    /// Gell all rooms
+    /// Get all rooms
     /// </summary>
     /// <returns>Task&lt;RoomItems&lt;Entity&gt;&gt;.</returns>
     public async Task<IResponse<RoomItems<Entity>>> GetAllAsync()
