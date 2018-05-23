@@ -60,6 +60,8 @@
     <Compile Include="Models\Request\SendMessage.cs" />
     <Compile Include="Models\Request\SendNotification.cs" />
     <Compile Include="Models\Request\WebhookEvent.cs" />
+    <Compile Include="Models\Response\Emoticon.cs" />
+    <Compile Include="Models\Response\EmoticonItems.cs" />
     <Compile Include="Models\Response\File.cs" />
     <Compile Include="Models\Response\Room.cs" />
     <Compile Include="Models\Response\Entity.cs" />
